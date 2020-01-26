@@ -35,15 +35,15 @@ Future<bool> signIn(int credencial) async {
 void updateInfo(FirebaseUser user) async {
   userData.userRef = user;
 
-  if (! (await db.checkUserExists())) {
+  if (await db.checkUserExists()) {
+    print("el usuario si existia en firebase");
+
+    db.updateLocal();
+  } else {
     print("el usuario no existia en firebase");
     userData.userName = user.displayName;
 
     db.updateDB();
-  } else {
-    print("el usuario si existia en firebase");
-
-    db.updateLocal();
   }
 }
 

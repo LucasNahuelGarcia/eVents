@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ElementoListado extends StatelessWidget {
+class CardEvento extends StatelessWidget {
   final String titulo;
   final String descripcion;
   final String uidEvento;
-  ElementoListado(this.titulo, this.descripcion,this.uidEvento);
+  CardEvento(this.titulo, this.descripcion,this.uidEvento);
 
   @override
   Widget build(BuildContext context) {

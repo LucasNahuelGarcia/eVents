@@ -47,10 +47,15 @@ class MainView extends StatelessWidget {
           ],
         ),
       ),
-      body: ListView(
-        children: <Widget>[
-          ElementoListado("Titulo","Una descripcoin muy larga y bla bla bla bla bla bla bla bla bla bla bla bla bla lba bla ","asdf"),
-        ],
+      body: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (BuildContext context, int i) {
+          String desc = "";
+          for(int n = 100; n < 250; n++)
+            desc = desc + String.fromCharCode(n);
+          return CardEvento("titulo $i", desc, "$i");
+        },
+        
       ),
     );
   }
