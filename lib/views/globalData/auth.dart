@@ -38,12 +38,12 @@ void updateInfo(FirebaseUser user) async {
   if (await db.checkUserExists()) {
     print("el usuario si existia en firebase");
 
-    db.updateLocal();
+    db.updateUserLocal();
   } else {
     print("el usuario no existia en firebase");
     userData.userName = user.displayName;
 
-    db.updateDB();
+    db.updateUserDB();
   }
 }
 

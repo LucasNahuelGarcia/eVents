@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import './user.dart' as userData;
+import './eventos.dart' as eventosData;
 
 const String _usuariosRef = "usuarios";
 const String _eventosRef = "eventos";
@@ -23,7 +25,7 @@ Future<bool> checkUserExists() async {
 ///
 ///Actualiza la informacion de firebase con la informacion local
 ///de la cuenta
-void updateDB() {
+void updateUserDB() {
   Map<String, dynamic> data = {
     //esto es lo que se sube a firebase DB
     "nombre": userData.userName,
@@ -40,7 +42,7 @@ void updateDB() {
 ///
 ///Actualiza la informacion local de la cuenta con la
 ///informacion de firebase
-void updateLocal() {
+void updateUserLocal() {
   Firestore.instance
       .collection(_usuariosRef)
       .document(userData.userRef.uid)
@@ -49,6 +51,29 @@ void updateLocal() {
             userData.userName = documentSnapshot.data['nombre'],
             userData.userDescription = documentSnapshot.data['descripcion'],
           });
+}
+
+///Actualiza la lista local de eventos con los 20 mas ceranos de
+///la DB.
+Future updateEventos() async {
+  QuerySnapshot snapshot =
+      await Firestore.instance.collection(_eventosRef).getDocuments();
+
+  List<eventosData.Evento> _eventosAux = List<eventosData.Evento>();
+  for (int i = 0; i < snapshot.documents.length; i++) {
+    DocumentSnapshot doc = snapshot.documents[i];
+    eventosData.Evento newEvent =
+        eventosData.Evento(doc['nombre'], doc['descripcion'], doc.documentID);
+
+    
+      print("Se registro un nuevo evento:");
+      print("    nombre: ${doc['nombre']}");
+      print("    Descripcion: ${doc['descripcion']}");
+      _eventosAux.add(newEvent);
+      print("eventos en lista: ${eventosData.Eventos.length}");
+  }
+
+  eventosData.Eventos.replace(_eventosAux);
 }
 
 void crearEvento() {

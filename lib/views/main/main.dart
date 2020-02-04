@@ -1,10 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'navBar.dart';
-import 'cardEvento.dart';
+import 'eventosView.dart';
 import '../globalData/user.dart' as userData;
+import '../globalData/firebase.dart' as db;
+import '../globalData/eventos.dart' as eventosData;
 
 class MainView extends StatelessWidget {
+  final ValueListenable<int> cantidadDeEventosNotifier = ValueNotifier(eventosData.Eventos.length);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,13 +22,13 @@ class MainView extends StatelessWidget {
           FlatButton(
             child: Icon(Icons.search),
             onPressed: () => {
-              Navigator.pushNamed(context, "/crearEvento"),
+              db.updateEventos(),
             },
           ),
         ],
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal:20,vertical: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20.0),
           child: FloatingNavBar(),
@@ -47,15 +52,11 @@ class MainView extends StatelessWidget {
           ],
         ),
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int i) {
-          String desc = "";
-          for(int n = 100; n < 250; n++)
-            desc = desc + String.fromCharCode(n);
-          return CardEvento("titulo $i", desc, "$i");
+      body: ValueListenableBuilder<List<eventosData.Evento>>(
+        valueListenable: eventosData.Eventos.getNotifier,
+        builder: (context, value, child) {
+          return EventosView(value);
         },
-        
       ),
     );
   }

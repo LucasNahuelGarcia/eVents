@@ -27,7 +27,7 @@ class CardEvento extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.symmetric(horizontal: 5,vertical: 2.5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
