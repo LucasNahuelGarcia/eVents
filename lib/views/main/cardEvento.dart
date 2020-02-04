@@ -9,7 +9,7 @@ class CardEvento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        margin: EdgeInsets.all(25),
+        margin: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
         color: Colors.white,
         semanticContainer: false,
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -27,7 +27,7 @@ class CardEvento extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5,vertical: 2.5),
+                  padding: EdgeInsets.all(15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
