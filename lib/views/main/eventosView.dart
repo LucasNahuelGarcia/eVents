@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../globalData/evento.dart';
 import 'cardEvento.dart';
-import '../globalData/eventos.dart' as eventosData;
 
 class EventosView extends StatelessWidget {
-  final List<eventosData.Evento> _eventos;
+  final List<Evento> _eventos;
 
   EventosView(this._eventos);
 
@@ -21,7 +21,7 @@ class EventosView extends StatelessWidget {
       res = ListView.builder(
         itemCount: _eventos.length,
         itemBuilder: (context, i) {
-          eventosData.Evento e = _eventos[i];
+          Evento e = _eventos[i];
           return CardEvento(e.nombre, e.descripcion, e.id);
         },
       );

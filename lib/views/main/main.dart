@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../globalData/evento.dart';
 import 'navBar.dart';
 import 'eventosView.dart';
 import '../globalData/user.dart' as userData;
@@ -52,7 +53,7 @@ class MainView extends StatelessWidget {
           ],
         ),
       ),
-      body: ValueListenableBuilder<List<eventosData.Evento>>(
+      body: ValueListenableBuilder<List<Evento>>(
         valueListenable: eventosData.Eventos.getNotifier,
         builder: (context, value, child) {
           return EventosView(value);

@@ -1,7 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'evento.dart';
 import './user.dart' as userData;
 import './eventos.dart' as eventosData;
 
@@ -59,18 +57,16 @@ Future updateEventos() async {
   QuerySnapshot snapshot =
       await Firestore.instance.collection(_eventosRef).getDocuments();
 
-  List<eventosData.Evento> _eventosAux = List<eventosData.Evento>();
+  List<Evento> _eventosAux = List<Evento>();
   for (int i = 0; i < snapshot.documents.length; i++) {
     DocumentSnapshot doc = snapshot.documents[i];
-    eventosData.Evento newEvent =
-        eventosData.Evento(doc['nombre'], doc['descripcion'], doc.documentID);
+    Evento newEvent = Evento(doc['nombre'], doc['descripcion'], doc.documentID);
 
-    
-      print("Se registro un nuevo evento:");
-      print("    nombre: ${doc['nombre']}");
-      print("    Descripcion: ${doc['descripcion']}");
-      _eventosAux.add(newEvent);
-      print("eventos en lista: ${eventosData.Eventos.length}");
+    print("Se registro un nuevo evento:");
+    print("    nombre: ${doc['nombre']}");
+    print("    Descripcion: ${doc['descripcion']}");
+    _eventosAux.add(newEvent);
+    print("eventos en lista: ${eventosData.Eventos.length}");
   }
 
   eventosData.Eventos.replace(_eventosAux);
