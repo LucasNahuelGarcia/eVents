@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../globalData/auth.dart' as authF;
+import '../../globalData/auth.dart' as authF;
 
 class LoginView extends StatelessWidget {
   void _logIn(int credencial, BuildContext context) async {

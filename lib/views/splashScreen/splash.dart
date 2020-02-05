@@ -1,7 +1,6 @@
-import 'package:events/views/globalData/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../globalData/auth.dart' as auth;
+import 'package:events/globalData/auth.dart' as auth;
 
 class Splash extends StatefulWidget {
   Splash({Key key}) : super(key: key);

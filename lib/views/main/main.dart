@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../globalData/evento.dart';
+import '../../globalData/evento.dart';
 import 'navBar.dart';
 import 'eventosView.dart';
-import '../globalData/user.dart' as userData;
-import '../globalData/firebase.dart' as db;
-import '../globalData/eventos.dart' as eventosData;
+import '../../globalData/user.dart' as userData;
+import '../../globalData/firebase.dart' as db;
+import '../../globalData/eventos.dart' as eventosData;
 
 class MainView extends StatelessWidget {
   final ValueListenable<int> cantidadDeEventosNotifier = ValueNotifier(eventosData.Eventos.length);

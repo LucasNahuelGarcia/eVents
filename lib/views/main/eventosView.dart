@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../globalData/evento.dart';
+import '../../globalData/evento.dart';
 import 'cardEvento.dart';
 
 class EventosView extends StatelessWidget {
