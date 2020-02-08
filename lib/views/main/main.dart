@@ -5,7 +5,7 @@ import 'package:groovin_material_icons/groovin_material_icons.dart';
 import 'package:flutter/widgets.dart';
 import '../../globalData/evento.dart';
 import 'navBar.dart';
-import 'eventosView.dart';
+import 'explorarEventosView.dart';
 import '../../globalData/user.dart' as userData;
 import '../../globalData/firebase.dart' as db;
 import '../../globalData/eventos.dart' as eventosData;
@@ -53,7 +53,7 @@ class MainView extends StatelessWidget {
       ),
       body: ValueListenableBuilder<List<Evento>>(
           valueListenable: eventosData.Eventos.getNotifier,
-          builder: (context, value, child) => EventosView(value)),
+          builder: (context, value, child) => ExplorarEventosView(value)),
       bottomNavigationBar: FloatingNavBar(_paginaActual),
     );
   }

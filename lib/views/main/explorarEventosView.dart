@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../../globalData/evento.dart';
 import 'cardEvento.dart';
 
-class EventosView extends StatelessWidget {
+class ExplorarEventosView extends StatelessWidget {
   final List<Evento> _eventos;
 
-  EventosView(this._eventos);
+  ExplorarEventosView(this._eventos);
 
   @override
   Widget build(BuildContext context) {
