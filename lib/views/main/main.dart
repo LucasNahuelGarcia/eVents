@@ -25,14 +25,6 @@ class MainView extends StatelessWidget {
           "eVents",
           textScaleFactor: 1.5,
         ),
-        actions: <Widget>[
-          FlatButton(
-            child: Icon(Icons.search),
-            onPressed: () => {
-              db.updateEventos(),
-            },
-          ),
-        ],
       ),
       drawer: Drawer(
         child: Column(

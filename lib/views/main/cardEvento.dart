@@ -18,7 +18,7 @@ class CardEvento extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
-                height: 170,
+                height: 270,
                 child: _evento.referenciaImagen != null
                     ? CachedNetworkImage(
                         imageUrl: _evento.referenciaImagen,
@@ -34,23 +34,23 @@ class CardEvento extends StatelessWidget {
                       ),
               ),
               Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text(
                         _evento.nombre,
                         textAlign: TextAlign.left,
-                        style: TextStyle(
-                        ),
+                        style: TextStyle(),
                         textScaleFactor: 2.0,
                       ),
-                      Divider(),
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                      ),
                       Text(
                         _evento.descripcion,
                         textAlign: TextAlign.left,
-                        style: TextStyle(
-                        ),
+                        style: TextStyle(color: Colors.black87),
                         textScaleFactor: 1.0,
                       ),
                     ],
