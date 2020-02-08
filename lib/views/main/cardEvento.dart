@@ -35,7 +35,7 @@ class CardEvento extends StatelessWidget {
                     ),
                   ),
                   Padding(padding: EdgeInsets.all(5),),
-                  Text("Nombre de Usuario", style: TextStyle(fontSize: 20),)
+                  Text(_evento.creador ?? "Creador", style: TextStyle(fontSize: 20),)
                 ],
               ),
             ),

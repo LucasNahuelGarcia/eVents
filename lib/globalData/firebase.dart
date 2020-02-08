@@ -74,16 +74,28 @@ Future updateEventos() async {
   for (int i = 0; i < snapshot.documents.length; i++) {
     DocumentSnapshot doc = snapshot.documents[i];
 
+    //formateo la referencia de imagen a un link usable
     DocumentReference imgRef = doc['refIMG'];
     String refIMG;
     if (imgRef != null) refIMG = await imagePath(imgRef);
 
-    Evento newEvent = Evento(doc['nombre'], doc['descripcion'], doc.documentID,
+    //obtengo el nombre del creador del evento
+    DocumentReference docCreadorRef = doc['creador'];
+    DocumentSnapshot docCreador;
+    String nombreCreador = "creador";
+    if (docCreadorRef != null) {
+      docCreador = await Firestore.instance.document(docCreadorRef.path).get();
+      nombreCreador = docCreador['nombre'];
+    }
+
+    Evento newEvent = Evento(
+        doc['nombre'], doc['descripcion'], doc.documentID, nombreCreador,
         referenciaImagen: refIMG);
 
     print("Se registro un nuevo evento:");
     print("    nombre: ${doc['nombre']}");
     print("    Descripcion: ${doc['descripcion']}");
+    print("    Creador: $nombreCreador");
     print("    IMGref sin formato: $imgRef");
     print("    IMGref con formato: $refIMG");
 
