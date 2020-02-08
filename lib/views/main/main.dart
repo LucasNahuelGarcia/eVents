@@ -4,6 +4,8 @@ import 'package:groovin_material_icons/groovin_material_icons.dart';
 
 import 'package:flutter/widgets.dart';
 import '../../globalData/evento.dart';
+import 'eventosGuardadosView.dart';
+import 'suscripcionesView.dart';
 import 'navBar.dart';
 import 'explorarEventosView.dart';
 import '../../globalData/user.dart' as userData;
@@ -17,7 +19,6 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     db.updateEventos();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -51,10 +52,31 @@ class MainView extends StatelessWidget {
           ],
         ),
       ),
-      body: ValueListenableBuilder<List<Evento>>(
-          valueListenable: eventosData.Eventos.getNotifier,
-          builder: (context, value, child) => ExplorarEventosView(value)),
-      bottomNavigationBar: FloatingNavBar(_paginaActual),
+      body: ValueListenableBuilder<int>(
+          valueListenable: _paginaActual,
+          builder: (context, value, child) {
+            Widget res;
+            switch (value) {
+              case 0:
+                res = ValueListenableBuilder<List<Evento>>(
+                    valueListenable: eventosData.Eventos.getNotifier,
+                    builder: (context, value, child) =>
+                        ExplorarEventosView(value));
+                break;
+              case 1:
+                res = EventosGuardadosView();
+                break;
+              case 2:
+                res = SuscripcionesView();
+                break;
+            }
+
+            return res;
+          }),
+      bottomNavigationBar: ValueListenableBuilder<int>(
+        valueListenable: _paginaActual,
+        builder: (context, value, child) => FloatingNavBar(_paginaActual),
+      ),
     );
   }
 }

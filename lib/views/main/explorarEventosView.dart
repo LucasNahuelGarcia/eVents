@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../globalData/evento.dart';
 import 'cardEvento.dart';
+import '../../globalData/firebase.dart' as db;
 
 class ExplorarEventosView extends StatelessWidget {
   final List<Evento> _eventos;
@@ -13,9 +15,13 @@ class ExplorarEventosView extends StatelessWidget {
     if (_eventos.length == 0) {
       res = LinearProgressIndicator();
     } else {
-      res = ListView.builder(
+      res = RefreshIndicator(
+        onRefresh: () => db.updateEventos(),
+        child: ListView.builder(
           itemCount: _eventos.length,
-          itemBuilder: (context, i) => CardEvento(_eventos[i]));
+          itemBuilder: (context, i) => CardEvento(_eventos[i]),
+        ),
+      );
     }
     return res;
   }
