@@ -1,10 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'evento.dart';
 import './user.dart' as userData;
 import './eventos.dart' as eventosData;
 
 const String _usuariosRef = "usuarios";
 const String _eventosRef = "eventos";
+
+///A partir de una referencia de documento de firebase, devuelve una url para descargar
+///dicho documento
+Future<String> imagePath(DocumentReference path) async {
+  String pathFormateada = '/' + path.path.split('/')[1];
+  return await FirebaseStorage.instance
+      .ref()
+      .child(pathFormateada)
+      .getDownloadURL();
+}
 
 ///Chequea la existencia del usuario en la base de datos
 Future<bool> checkUserExists() async {
@@ -40,19 +51,21 @@ void updateUserDB() {
 ///
 ///Actualiza la informacion local de la cuenta con la
 ///informacion de firebase
-void updateUserLocal() {
-  Firestore.instance
+Future updateUserLocal() async {
+  DocumentSnapshot documentSnapshot = await Firestore.instance
       .collection(_usuariosRef)
       .document(userData.userRef.uid)
-      .get()
-      .then((documentSnapshot) => {
-            userData.userName = documentSnapshot.data['nombre'],
-            userData.userDescription = documentSnapshot.data['descripcion'],
-          });
+      .get();
+
+  userData.userName = documentSnapshot.data['nombre'];
+  userData.userDescription = documentSnapshot.data['descripcion'];
 }
 
 ///Actualiza la lista local de eventos con los 20 mas ceranos de
 ///la DB.
+///
+///Realiza esto reemplazando la lista original con una nueva, disparando el
+///ValueNotifier de la misma
 Future updateEventos() async {
   QuerySnapshot snapshot =
       await Firestore.instance.collection(_eventosRef).getDocuments();
@@ -60,16 +73,25 @@ Future updateEventos() async {
   List<Evento> _eventosAux = List<Evento>();
   for (int i = 0; i < snapshot.documents.length; i++) {
     DocumentSnapshot doc = snapshot.documents[i];
-    Evento newEvent = Evento(doc['nombre'], doc['descripcion'], doc.documentID);
+
+    DocumentReference imgRef = doc['refIMG'];
+    String refIMG;
+    if (imgRef != null) refIMG = await imagePath(imgRef);
+
+    Evento newEvent = Evento(doc['nombre'], doc['descripcion'], doc.documentID,
+        referenciaImagen: refIMG);
 
     print("Se registro un nuevo evento:");
     print("    nombre: ${doc['nombre']}");
     print("    Descripcion: ${doc['descripcion']}");
+    print("    IMGref sin formato: $imgRef");
+    print("    IMGref con formato: $refIMG");
+
     _eventosAux.add(newEvent);
-    print("eventos en lista: ${eventosData.Eventos.length}");
   }
 
   eventosData.Eventos.replace(_eventosAux);
+  print("eventos en lista: ${eventosData.Eventos.length}");
 }
 
 void crearEvento() {

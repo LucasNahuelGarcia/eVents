@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:events/globalData/evento.dart';
 
 class CardEvento extends StatelessWidget {
-  final String titulo;
-  final String descripcion;
-  final String uidEvento;
-  CardEvento(this.titulo, this.descripcion,this.uidEvento);
+  final Evento _evento;
+  CardEvento(this._evento);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        margin: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-        color: Colors.white,
+        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         semanticContainer: false,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: InkWell(
@@ -20,11 +19,19 @@ class CardEvento extends StatelessWidget {
             children: <Widget>[
               Container(
                 height: 170,
-                color: Colors.grey,
-                child: Image(
-                  fit: BoxFit.fitHeight,
-                  image: AssetImage("res/imageHolder.png"),
-                ),
+                child: _evento.referenciaImagen != null
+                    ? CachedNetworkImage(
+                        imageUrl: _evento.referenciaImagen,
+                        placeholder: (context, url) => Container(
+                          child: LinearProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        fit: BoxFit.cover,
+                      )
+                    : Image(
+                        image: AssetImage("res/imageHolder.png"),
+                        fit: BoxFit.fitHeight,
+                      ),
               ),
               Padding(
                   padding: EdgeInsets.all(15),
@@ -32,18 +39,17 @@ class CardEvento extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text(
-                        titulo,
+                        _evento.nombre,
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          color: Colors.black,
                         ),
                         textScaleFactor: 2.0,
                       ),
+                      Divider(),
                       Text(
-                        descripcion,
+                        _evento.descripcion,
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          color: Colors.grey,
                         ),
                         textScaleFactor: 1.0,
                       ),

@@ -22,15 +22,16 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
-        accentColor: Colors.blue,
+        brightness: Brightness.light,
+
+        primarySwatch: Colors.green,
+
       ),
       home: Splash(),
-      routes: <String, WidgetBuilder> {
-        '/login' : (BuildContext context) => LoginView(),
-        '/main' : (BuildContext context) => MainView(),
-        '/crearEvento' : (BuildContext context) => CrearEventoView(),
+      routes: <String, WidgetBuilder>{
+        '/login': (BuildContext context) => LoginView(),
+        '/main': (BuildContext context) => MainView(),
+        '/crearEvento': (BuildContext context) => CrearEventoView(),
       },
     );
   }

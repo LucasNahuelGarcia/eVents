@@ -11,20 +11,11 @@ class EventosView extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget res;
     if (_eventos.length == 0) {
-      res = ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, i) {
-          return CardEvento("?????????????????", "??????????", "");
-        },
-      );
+      res = LinearProgressIndicator();
     } else {
       res = ListView.builder(
-        itemCount: _eventos.length,
-        itemBuilder: (context, i) {
-          Evento e = _eventos[i];
-          return CardEvento(e.nombre, e.descripcion, e.id);
-        },
-      );
+          itemCount: _eventos.length,
+          itemBuilder: (context, i) => CardEvento(_eventos[i]));
     }
     return res;
   }

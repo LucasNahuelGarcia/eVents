@@ -32,13 +32,13 @@ Future<bool> signIn(int credencial) async {
 ///la existencia de una entrada en la base de datos de firebase con el id del usuario
 ///si no existe se crea, si existe se actualiza la informacion de usuario con la
 ///de firebase
-void updateInfo(FirebaseUser user) async {
+Future updateInfo(FirebaseUser user) async {
   userData.userRef = user;
 
   if (await db.checkUserExists()) {
     print("el usuario si existia en firebase");
 
-    db.updateUserLocal();
+    await db.updateUserLocal();
   } else {
     print("el usuario no existia en firebase");
     userData.userName = user.displayName;

@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:groovin_material_icons/groovin_material_icons.dart';
+
 import 'package:flutter/widgets.dart';
 import '../../globalData/evento.dart';
 import 'navBar.dart';
@@ -9,10 +11,13 @@ import '../../globalData/firebase.dart' as db;
 import '../../globalData/eventos.dart' as eventosData;
 
 class MainView extends StatelessWidget {
-  final ValueListenable<int> cantidadDeEventosNotifier = ValueNotifier(eventosData.Eventos.length);
-  
+  static const int _DEFAULT_PAGE = 0;
+  final ValueNotifier<int> _paginaActual = ValueNotifier(_DEFAULT_PAGE);
+
   @override
   Widget build(BuildContext context) {
+    db.updateEventos();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -27,13 +32,6 @@ class MainView extends StatelessWidget {
             },
           ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: FloatingNavBar(),
-        ),
       ),
       drawer: Drawer(
         child: Column(
@@ -54,11 +52,9 @@ class MainView extends StatelessWidget {
         ),
       ),
       body: ValueListenableBuilder<List<Evento>>(
-        valueListenable: eventosData.Eventos.getNotifier,
-        builder: (context, value, child) {
-          return EventosView(value);
-        },
-      ),
+          valueListenable: eventosData.Eventos.getNotifier,
+          builder: (context, value, child) => EventosView(value)),
+      bottomNavigationBar: FloatingNavBar(_paginaActual),
     );
   }
 }
