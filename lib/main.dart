@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         brightness: Brightness.light,
 
-        primarySwatch: Colors.green,
-
+        primarySwatch: Colors.deepPurple,
+       // scaffoldBackgroundColor: Colors.deepPurple[900],
       ),
       home: Splash(),
       routes: <String, WidgetBuilder>{
