@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:groovin_material_icons/groovin_material_icons.dart';
 
 import 'package:flutter/widgets.dart';
 import '../../globalData/evento.dart';
