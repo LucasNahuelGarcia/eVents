@@ -24,7 +24,6 @@ class _SplashState extends State<Splash> {
               {
                 print("hay usuario...redireccionando a main..."),
                 Navigator.pushReplacementNamed(context, '/main'),
-                auth.updateInfo(currentUser),
               }
           },
         )

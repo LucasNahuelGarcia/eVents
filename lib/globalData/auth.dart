@@ -22,7 +22,6 @@ Future<bool> signIn(int credencial) async {
       _user = null;
   }
 
-  updateInfo(_user);
   bool res = _user != null;
 
   return res;

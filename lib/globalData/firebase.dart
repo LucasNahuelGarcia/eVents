@@ -38,7 +38,6 @@ void updateUserDB() {
   Map<String, dynamic> data = {
     //esto es lo que se sube a firebase DB
     "nombre": userData.userName,
-    "descripcion": userData.userDescription,
   };
 
   Firestore.instance
