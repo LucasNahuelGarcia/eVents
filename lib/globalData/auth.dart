@@ -69,3 +69,17 @@ Future<FirebaseUser> _googleSignIn() async {
 
   return user;
 }
+
+
+///revisa si el usuario existe utilizando el emtodo reload()
+Future<bool> checkUserExists(FirebaseUser user) async {
+  bool res;
+  try{
+    await user.reload();
+    res = true;
+  }
+  catch(e){
+    res = false;
+  }
+  return res;
+}

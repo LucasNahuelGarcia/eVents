@@ -11,10 +11,12 @@ const String _eventosRef = "eventos";
 ///dicho documento
 Future<String> imagePath(DocumentReference path) async {
   String pathFormateada = '/' + path.path.split('/')[1];
-  return await FirebaseStorage.instance
+
+  pathFormateada = await FirebaseStorage.instance
       .ref()
       .child(pathFormateada)
       .getDownloadURL();
+  return pathFormateada;
 }
 
 ///Chequea la existencia del usuario en la base de datos
@@ -84,7 +86,7 @@ Future updateEventos() async {
     String nombreCreador = "creador";
     if (docCreadorRef != null) {
       docCreador = await Firestore.instance.document(docCreadorRef.path).get();
-      nombreCreador = docCreador['nombre'];
+      if (docCreador.exists) nombreCreador = docCreador['nombre'];
     }
 
     Evento newEvent = Evento(

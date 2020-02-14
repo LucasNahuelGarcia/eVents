@@ -12,22 +12,15 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   void initState() {
-    FirebaseAuth.instance
-        .currentUser()
-        .then(
-          (currentUser) => {
-            if (currentUser == null)
-              {
-                print("no hay usuario...redireccionando a login..."),
-                Navigator.pushReplacementNamed(context, '/login')}
-            else
-              {
-                print("hay usuario...redireccionando a main..."),
-                Navigator.pushReplacementNamed(context, '/main'),
-              }
-          },
-        )
-        .catchError((err) => {print(err)});
+    FirebaseAuth.instance.currentUser().then((currentUser) async {
+      if (currentUser == null || await auth.checkUserExists(currentUser)) {
+        print("no hay usuario...redireccionando a login...");
+        Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        print("hay usuario...redireccionando a main...");
+        Navigator.pushReplacementNamed(context, '/main');
+      }
+    });
 
     super.initState();
   }
@@ -36,7 +29,10 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("eVents",textScaleFactor: 4.0,),
+        child: Text(
+          "eVents",
+          textScaleFactor: 4.0,
+        ),
       ),
     );
   }
