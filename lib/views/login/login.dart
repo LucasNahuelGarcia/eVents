@@ -20,7 +20,7 @@ class LoginView extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext buildContext) {
     return Scaffold(
       body: Builder(
         builder: (BuildContext context) => Align(
@@ -44,7 +44,7 @@ class LoginView extends StatelessWidget {
                     children: <Widget>[
                       RaisedButton(
                         onPressed: () =>
-                            {_logIn(authF.SignInMethod.google, context)},
+                            {_logIn(authF.SignInMethod.google, buildContext)},
                         child: Text("Ingresar con Google"),
                       ),
                       RaisedButton(

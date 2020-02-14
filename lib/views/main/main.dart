@@ -30,9 +30,6 @@ class MainView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             DrawerHeader(
-              decoration: BoxDecoration(
-                  backgroundBlendMode: BlendMode.lighten,
-                  color: Theme.of(context).buttonColor),
               child: Text(
                 userData.userName ?? "<nombre>",
                 textScaleFactor: 1.5,
