@@ -3,6 +3,7 @@ import './views/login/login.dart';
 import 'views/splashScreen/splash.dart';
 import 'views/main/main.dart';
 import 'views/crearEvento/crearEvento.dart';
+import 'views/detallesEvento/detallesEvento.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,13 +26,14 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
 
         primarySwatch: Colors.deepPurple,
-       // scaffoldBackgroundColor: Colors.deepPurple[900],
+        // scaffoldBackgroundColor: Colors.deepPurple[900],
       ),
       home: Splash(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginView(),
         '/main': (BuildContext context) => MainView(),
         '/crearEvento': (BuildContext context) => CrearEventoView(),
+        DetallesEventoView.routeName: (context) => DetallesEventoView(),
       },
     );
   }

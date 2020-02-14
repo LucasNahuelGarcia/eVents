@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events/globalData/evento.dart';
+import '../detallesEvento/detallesEvento.dart';
 
 class CardEvento extends StatelessWidget {
   final Evento _evento;
@@ -14,7 +15,13 @@ class CardEvento extends StatelessWidget {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            DetallesEventoView.routeName,
+            arguments: _evento,
+          );
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
