@@ -7,7 +7,6 @@ import 'eventosGuardadosView.dart';
 import 'suscripcionesView.dart';
 import 'navBar.dart';
 import 'explorarEventosView.dart';
-import '../../globalData/user.dart' as userData;
 import '../../globalData/firebase.dart' as db;
 import '../../globalData/eventos.dart' as eventosData;
 
@@ -24,21 +23,13 @@ class MainView extends StatelessWidget {
           "eVents",
           textScaleFactor: 1.5,
         ),
-      ),
-      drawer: Drawer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text(
-                userData.userName ?? "<nombre>",
-                textScaleFactor: 1.5,
-              ),
-              curve: Curves.easeInOutExpo,
-              duration: Duration(seconds: 1),
-            ),
-          ],
-        ),
+        actions: <Widget>[
+          FlatButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/crearEvento');
+              },
+              child: Icon(Icons.add)),
+        ],
       ),
       body: ValueListenableBuilder<int>(
           valueListenable: _paginaActual,
