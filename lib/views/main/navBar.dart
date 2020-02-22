@@ -15,7 +15,7 @@ class FloatingNavBar extends StatelessWidget {
         currentIndex: _paginaActual.value,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(GroovinMaterialIcons.apps),
+            icon: Icon(Icons.home),
             title: Text("Descubre"),
           ),
           BottomNavigationBarItem(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../globalData/firebase.dart' as db;
 
 class CrearEventoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarOpacity: 1.0,
+        toolbarOpacity: 0.5,
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -74,7 +75,7 @@ class FormEventoState extends State<FormEvento> {
             },
           ),
           RaisedButton(
-            onPressed: () => {},
+            onPressed: () => db.crearEvento(),
             child: Text(
               "crear",
               textScaleFactor: 1.2,
