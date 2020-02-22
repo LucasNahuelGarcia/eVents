@@ -41,6 +41,8 @@ class FormEvento extends StatefulWidget {
 
 class FormEventoState extends State<FormEvento> {
   final _formKey = GlobalKey<FormState>();
+  String _nombre;
+  String _descripcion;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,9 @@ class FormEventoState extends State<FormEvento> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           TextFormField(
+            onChanged: (val) {
+              _nombre = val;
+            },
             initialValue: "Nombre",
             maxLength: 25,
             autovalidate: true,
@@ -64,6 +69,9 @@ class FormEventoState extends State<FormEvento> {
             },
           ),
           TextFormField(
+            onChanged: (val) {
+              _descripcion = val;
+            },
             minLines: 1,
             maxLines: 5,
             maxLength: 125,
@@ -75,7 +83,10 @@ class FormEventoState extends State<FormEvento> {
             },
           ),
           RaisedButton(
-            onPressed: () => db.crearEvento(),
+            onPressed: () {
+              db.crearEvento(_nombre,_descripcion);
+              Navigator.of(context).pop();
+            },
             child: Text(
               "crear",
               textScaleFactor: 1.2,

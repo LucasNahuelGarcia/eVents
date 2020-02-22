@@ -34,5 +34,3 @@ import 'evento.dart';
     _lista.value.clear();
   }
 }
-
-//List<Evento> lista = new List<Evento>();

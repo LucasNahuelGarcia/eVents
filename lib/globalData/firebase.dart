@@ -107,6 +107,17 @@ Future updateEventos() async {
   print("eventos en lista: ${eventosData.Eventos.length}");
 }
 
-void crearEvento() {
-  //TODO() crear evento
+Future<bool> crearEvento(String nombre, String descripcion) async {
+  Map<String, dynamic> data = {
+    //esto es lo que se sube a firebase DB
+    "nombre": nombre,
+    "descripcion": descripcion,
+  };
+
+  await Firestore.instance
+      .collection(_eventosRef)
+      .document()
+      .setData(data);
+
+  return true;
 }
