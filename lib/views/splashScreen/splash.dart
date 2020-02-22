@@ -13,7 +13,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((currentUser) async {
-      if (currentUser == null || await auth.checkUserExists(currentUser)) {
+      if (await auth.checkUserExists(currentUser)) {
         print("no hay usuario...redireccionando a login...");
         Navigator.pushReplacementNamed(context, '/login');
       } else {
