@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import './user.dart' as userData;
 import './firebase.dart' as db;
 
 ///Este archivo contiene todos los metodos de autenticacion
 ///y esas cosas
+
+FirebaseUser userRef;
 
 abstract class SignInMethod {
   static const int facebook = 1;
@@ -27,12 +28,14 @@ Future<bool> signIn(int credencial) async {
   return res;
 }
 
+///geter para el parametro user
+
 ///Se actualiza el usuario en userData (globalData/user.dart) y luego se chequea
 ///la existencia de una entrada en la base de datos de firebase con el id del usuario
 ///si no existe se crea, si existe se actualiza la informacion de usuario con la
 ///de firebase
 Future updateInfo(FirebaseUser user) async {
-  userData.userRef = user;
+  userRef = user;
 
   if (await db.checkUserExists()) {
     print("el usuario si existia en firebase");
@@ -40,8 +43,6 @@ Future updateInfo(FirebaseUser user) async {
     await db.updateUserLocal();
   } else {
     print("el usuario no existia en firebase");
-    userData.userName = user.displayName;
-
     db.updateUserDB();
   }
 }
@@ -71,16 +72,3 @@ Future<FirebaseUser> _googleSignIn() async {
 }
 
 
-///revisa si el usuario existe utilizando el emtodo reload()
-Future<bool> checkUserExists(FirebaseUser user) async {
-  bool res = false;
-  try{
-    print("chequeando usuario.");
-    await user.reload();
-    res = true;
-  }
-  catch(e){
-    res = false;
-  }
-  return res;
-}
