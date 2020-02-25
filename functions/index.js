@@ -13,14 +13,20 @@ let db = admin.firestore();
 // });
 
 exports.createProfile = functions.auth
-  .user()
-  .onCreate((userRecord, context) => {
-    return db.collection("usuaros").doc(userRecord.uid)
-      .set({
-        nombre: userRecord.displayName || userRecord.email,
-      });
-  });
+    .user()
+    .onCreate((userRecord, context) => {
+        return db.collection("usuaros").doc(userRecord.uid)
+            .set({
+                nombre: userRecord.displayName || userRecord.email,
+            });
+    });
 
+exports.deleteProfile = functions.auth
+    .user()
+    .onDelete((userRecord, context) => {
+        return db.collection("usuaros").doc(userRecord.uid)
+            .delete();
+    });
 
 exports.createEvent = functions.firestore.document("eventos/{id}").onCreate((userRecord, eventContext) => {
     return db.collection("eventos").doc(eventContext.params.id).update({
