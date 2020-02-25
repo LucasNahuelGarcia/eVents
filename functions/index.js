@@ -22,7 +22,7 @@ exports.deleteProfile = functions.auth
     });
 
 exports.createEvent = functions.database.ref("eventos/{id}").onCreate((snap, context) => {
-    return db.collection("eventos").doc(eventContext.params.id).update({
-        creador: db.collection("usuarios").doc(context.auth),
+    return db.ref("/eventos/" + eventContext.params.id).update({
+        creador: db.ref("/usuarios/" + context.auth.uid),
     })
 });
