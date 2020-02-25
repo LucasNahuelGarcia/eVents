@@ -83,8 +83,8 @@ class FormEventoState extends State<FormEvento> {
             },
           ),
           RaisedButton(
-            onPressed: () {
-              db.crearEvento(_nombre,_descripcion);
+            onPressed: () async {
+              await db.crearEvento(_nombre,_descripcion);
               Navigator.of(context).pop();
             },
             child: Text(
