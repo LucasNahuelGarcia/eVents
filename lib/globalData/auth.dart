@@ -60,15 +60,13 @@ Future<FirebaseUser> _googleSignIn() async {
 
   await FirebaseAuth.instance
       .signInWithCredential(credential)
-      .then((cred) => {
-            user = cred.user,
-          })
       .catchError((error) => {
             print("error de inicio de sesion con google: $error"),
             user = null,
+          })
+      .then((cred) => {
+            user = cred.user,
           });
 
   return user;
 }
-
-

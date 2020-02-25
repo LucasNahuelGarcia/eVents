@@ -3,19 +3,12 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-let db = admin.firestore();
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+let db = admin.database();
 
 exports.createProfile = functions.auth
     .user()
     .onCreate((userRecord, context) => {
-        return db.collection("usuaros").doc(userRecord.uid)
+        return db.ref("/usuaros/" + userRecord.uid)
             .set({
                 nombre: userRecord.displayName || userRecord.email,
             });
@@ -24,12 +17,12 @@ exports.createProfile = functions.auth
 exports.deleteProfile = functions.auth
     .user()
     .onDelete((userRecord, context) => {
-        return db.collection("usuaros").doc(userRecord.uid)
+        return db.ref("/usuaros/" + userRecord.uid)
             .delete();
     });
 
-exports.createEvent = functions.firestore.document("eventos/{id}").onCreate((userRecord, eventContext) => {
+exports.createEvent = functions.database.ref("eventos/{id}").onCreate((snap, context) => {
     return db.collection("eventos").doc(eventContext.params.id).update({
-        creador: db.collection("usuarios").doc(userRecord.data.uid),
+        creador: db.collection("usuarios").doc(context.auth),
     })
 });
