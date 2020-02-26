@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events/globalData/evento.dart';
-import '../detallesEvento/detallesEvento.dart';
+import 'userInfoBar.dart';
+import '../../detallesEvento/detallesEvento.dart';
 
 class CardEvento extends StatelessWidget {
   final Evento _evento;
@@ -25,27 +26,6 @@ class CardEvento extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: Row(
-                children: <Widget>[
-                  Material(
-                    elevation: 1,
-                    shape: CircleBorder(),
-                    clipBehavior: Clip.hardEdge,
-                    color: Colors.transparent,
-                    child: Ink.image(
-                      image: AssetImage('res/imageHolder.png'),
-                      fit: BoxFit.cover,
-                      width: 35.0,
-                      height: 35.0,
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.all(5),),
-                  Text(_evento.creador ?? "Creador", style: TextStyle(fontSize: 20),)
-                ],
-              ),
-            ),
             Container(
               height: 270,
               child: _evento.referenciaImagen != null
@@ -67,6 +47,7 @@ class CardEvento extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  UserInfoBar(_evento.creador),
                   Text(
                     _evento.nombre,
                     textAlign: TextAlign.left,
