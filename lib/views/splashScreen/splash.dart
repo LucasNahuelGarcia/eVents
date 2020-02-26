@@ -14,6 +14,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     FirebaseAuth.instance.currentUser().then((currentUser) async {
       if (currentUser != null) {
+        auth.userRef = currentUser;
         print("hay usuario...redireccionando a main...");
         Navigator.pushReplacementNamed(context, '/main');
       } else {

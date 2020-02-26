@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'evento.dart';
-import './user.dart' as userData;
+import './auth.dart' as userData;
 import './eventos.dart' as eventosData;
 
 const String _usuariosRef = "usuarios";
@@ -35,36 +35,6 @@ Future<bool> checkUserExists() async {
   return exists;
 }
 
-///Requiere un usuario logueado.
-///
-///Actualiza la informacion de firebase con la informacion local
-///de la cuenta
-void updateUserDB() {
-  Map<String, dynamic> data = {
-    //esto es lo que se sube a firebase DB
-    "nombre": userData.userName,
-  };
-
-  Firestore.instance
-      .collection(_usuariosRef)
-      .document(userData.userRef.uid)
-      .setData(data);
-}
-
-///Requiere un usuario logueado
-///
-///Actualiza la informacion local de la cuenta con la
-///informacion de firebase
-Future updateUserLocal() async {
-  DocumentSnapshot documentSnapshot = await Firestore.instance
-      .collection(_usuariosRef)
-      .document(userData.userRef.uid)
-      .get();
-
-  userData.userName = documentSnapshot.data['nombre'];
-  userData.userDescription = documentSnapshot.data['descripcion'];
-}
-
 ///Actualiza la lista local de eventos con los 20 mas ceranos de
 ///la DB.
 ///
@@ -74,13 +44,15 @@ Future updateEventos() async {
   DataSnapshot snapshot =
       await FirebaseDatabase.instance.reference().child("eventos").once();
   Map<dynamic, dynamic> data = snapshot.value;
-
   List<Evento> _eventosAux = List<Evento>();
+
   for (int i = 0; i < data.entries.length; i++) {
     MapEntry<dynamic, dynamic> value = data.entries.elementAt(i);
     print("--------------evento----------------");
-    String refIMG = value.value['refIMG'];
     String idCreador = value.value['creador'];
+    if(idCreador == userData.userRef.uid)
+      continue;
+    String refIMG = value.value['refIMG'];
 
     DataSnapshot _snapCreador = await FirebaseDatabase.instance
         .reference()
@@ -88,7 +60,7 @@ Future updateEventos() async {
         .child(idCreador)
         .child("nombre")
         .once();
-    String nombreCreador = _snapCreador.value ?? idCreador;
+    String nombreCreador = _snapCreador.value ?? "<Nombre del creador>";
 
     Evento newEvent = Evento(
       value.value['nombre'],

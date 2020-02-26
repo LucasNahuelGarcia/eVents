@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import './firebase.dart' as db;
 
 ///Este archivo contiene todos los metodos de autenticacion
 ///y esas cosas
@@ -14,39 +12,18 @@ abstract class SignInMethod {
 }
 
 /// Inicia sesion con el metodo elegido
-Future<bool> signIn(int credencial) async {
-  FirebaseUser _user;
+Future signIn(int credencial) async {
   switch (credencial) {
     case (SignInMethod.google):
-      _user = await _googleSignIn();
+      userRef = await _googleSignIn();
       break; //TODO: login con facebook y otros autenticadores
     default:
-      _user = null;
+      userRef = null;
   }
-
-  bool res = _user != null;
-
-  return res;
 }
 
 ///geter para el parametro user
 
-///Se actualiza el usuario en userData (globalData/user.dart) y luego se chequea
-///la existencia de una entrada en la base de datos de firebase con el id del usuario
-///si no existe se crea, si existe se actualiza la informacion de usuario con la
-///de firebase
-Future updateInfo(FirebaseUser user) async {
-  userRef = user;
-
-  if (await db.checkUserExists()) {
-    print("el usuario si existia en firebase");
-
-    await db.updateUserLocal();
-  } else {
-    print("el usuario no existia en firebase");
-    db.updateUserDB();
-  }
-}
 
 Future<FirebaseUser> _googleSignIn() async {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
