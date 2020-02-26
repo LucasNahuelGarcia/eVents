@@ -8,7 +8,7 @@ class ImagenEvento extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 270,
-      child: referenciaImagen != null
+      child: referenciaImagen != null && referenciaImagen != ""
           ? CachedNetworkImage(
               imageUrl: referenciaImagen,
               placeholder: (context, url) => Container(

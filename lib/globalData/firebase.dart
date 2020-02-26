@@ -12,13 +12,15 @@ const String _eventosRef = "eventos";
 
 ///A partir de una referencia de documento de firebase, devuelve una url para descargar
 ///dicho documento
-Future<String> imagePath(DocumentReference path) async {
-  String pathFormateada = '/' + path.path.split('/')[1];
-
+Future<String> imagePath(String path) async {
+  String pathFormateada = '/' + path.split('/')[1];
+  print("formateando imgurl");
   pathFormateada = await FirebaseStorage.instance
       .ref()
       .child(pathFormateada)
       .getDownloadURL();
+  print("conseguimos la path formateada");
+
   return pathFormateada;
 }
 
@@ -49,11 +51,10 @@ Future updateEventos() async {
   for (int i = 0; i < data.entries.length; i++) {
     MapEntry<dynamic, dynamic> value = data.entries.elementAt(i);
     print("--------------evento----------------");
-    String idCreador = value.value['creador'];
-    if(idCreador == userData.userRef.uid)
-      continue;
-    String refIMG = value.value['refIMG'];
 
+    //Nombre Creador
+    String idCreador = value.value['creador'] ?? "";
+    if (idCreador == userData.userRef.uid || idCreador == "") continue;
     DataSnapshot _snapCreador = await FirebaseDatabase.instance
         .reference()
         .child("usuarios")
@@ -61,18 +62,32 @@ Future updateEventos() async {
         .child("nombre")
         .once();
     String nombreCreador = _snapCreador.value ?? "<Nombre del creador>";
+    print("    Creador: $nombreCreador");
+
+    //Imagen del evento
+    String refIMG = value.value['refIMG'] ?? "";
+    if (refIMG != "") refIMG = await imagePath(refIMG);
+    print("    IMGref: $refIMG");
+
+    //Descripcion del evento
+    String descripcion = value.value['descripcion'] ?? "";
+    print("    Descripcion: $descripcion");
+
+    //Nombre del evento
+    String nombre = value.value['nombre'] ?? "";
+    print("    nombre: $nombre");
+
+    //ID del evento
+    String id = value.key ?? "";
+    print("    ID: $id");
 
     Evento newEvent = Evento(
-      value.value['nombre'],
-      value.value['descripcion'],
-      value.value.toString(),
+      nombre,
+      descripcion,
+      id,
       nombreCreador,
+      referenciaImagen: refIMG,
     );
-
-    print("    nombre: ${value.value['nombre']}");
-    print("    Descripcion: ${value.value['descripcion']}");
-    print("    Creador: ${nombreCreador}");
-    print("    IMGref: $refIMG");
 
     _eventosAux.add(newEvent);
     print("--------------agregado----------------");

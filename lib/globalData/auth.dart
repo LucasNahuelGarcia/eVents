@@ -12,7 +12,7 @@ abstract class SignInMethod {
 }
 
 /// Inicia sesion con el metodo elegido
-Future signIn(int credencial) async {
+Future<bool> signIn(int credencial) async {
   switch (credencial) {
     case (SignInMethod.google):
       userRef = await _googleSignIn();
@@ -20,6 +20,7 @@ Future signIn(int credencial) async {
     default:
       userRef = null;
   }
+  return userRef != null;
 }
 
 ///geter para el parametro user
@@ -27,10 +28,7 @@ Future signIn(int credencial) async {
 
 Future<FirebaseUser> _googleSignIn() async {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
-  GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn().catchError((onError) {
-    print("Error de inicio de sesión con google: " + onError.toString());
-    return null;
-  });
+  GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
   GoogleSignInAuthentication authentication =
       await googleSignInAccount.authentication;
   AuthCredential credential = GoogleAuthProvider.getCredential(
