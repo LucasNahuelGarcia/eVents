@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import './firebase.dart' as db;
 
@@ -49,8 +50,10 @@ Future updateInfo(FirebaseUser user) async {
 
 Future<FirebaseUser> _googleSignIn() async {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
-
-  GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+  GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn().catchError((onError) {
+    print("Error de inicio de sesión con google: " + onError.toString());
+    return null;
+  });
   GoogleSignInAuthentication authentication =
       await googleSignInAccount.authentication;
   AuthCredential credential = GoogleAuthProvider.getCredential(

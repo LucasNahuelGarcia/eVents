@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'evento.dart';
 import './user.dart' as userData;
@@ -68,39 +71,39 @@ Future updateUserLocal() async {
 ///Realiza esto reemplazando la lista original con una nueva, disparando el
 ///ValueNotifier de la misma
 Future updateEventos() async {
-  QuerySnapshot snapshot =
-      await Firestore.instance.collection(_eventosRef).getDocuments();
+  DataSnapshot snapshot =
+      await FirebaseDatabase.instance.reference().child("eventos").once();
+  Map<dynamic, dynamic> data = snapshot.value;
 
   List<Evento> _eventosAux = List<Evento>();
-  for (int i = 0; i < snapshot.documents.length; i++) {
-    DocumentSnapshot doc = snapshot.documents[i];
+  for (int i = 0; i < data.entries.length; i++) {
+    MapEntry<dynamic, dynamic> value = data.entries.elementAt(i);
+    print("--------------evento----------------");
+    String refIMG = value.value['refIMG'];
+    String idCreador = value.value['creador'];
 
-    //formateo la referencia de imagen a un link usable
-    DocumentReference imgRef = doc['refIMG'];
-    String refIMG;
-    if (imgRef != null) refIMG = await imagePath(imgRef);
-
-    //obtengo el nombre del creador del evento
-    DocumentReference docCreadorRef = doc['creador'];
-    DocumentSnapshot docCreador;
-    String nombreCreador = "creador";
-    if (docCreadorRef != null) {
-      docCreador = await Firestore.instance.document(docCreadorRef.path).get();
-      if (docCreador.exists) nombreCreador = docCreador['nombre'];
-    }
+    DataSnapshot _snapCreador = await FirebaseDatabase.instance
+        .reference()
+        .child("usuarios")
+        .child(idCreador)
+        .child("nombre")
+        .once();
+    String nombreCreador = _snapCreador.value ?? idCreador;
 
     Evento newEvent = Evento(
-        doc['nombre'], doc['descripcion'], doc.documentID, nombreCreador,
-        referenciaImagen: refIMG);
+      value.value['nombre'],
+      value.value['descripcion'],
+      value.value.toString(),
+      nombreCreador,
+    );
 
-    print("Se registro un nuevo evento:");
-    print("    nombre: ${doc['nombre']}");
-    print("    Descripcion: ${doc['descripcion']}");
-    print("    Creador: $nombreCreador");
-    print("    IMGref sin formato: $imgRef");
-    print("    IMGref con formato: $refIMG");
+    print("    nombre: ${value.value['nombre']}");
+    print("    Descripcion: ${value.value['descripcion']}");
+    print("    Creador: ${nombreCreador}");
+    print("    IMGref: $refIMG");
 
     _eventosAux.add(newEvent);
+    print("--------------agregado----------------");
   }
 
   eventosData.Eventos.replace(_eventosAux);
@@ -114,10 +117,11 @@ Future<bool> crearEvento(String nombre, String descripcion) async {
     "descripcion": descripcion,
   };
 
-  await Firestore.instance
-      .collection(_eventosRef)
-      .document()
-      .setData(data);
+  await FirebaseDatabase.instance
+      .reference()
+      .child(_eventosRef)
+      .push()
+      .set(data);
 
   return true;
 }
