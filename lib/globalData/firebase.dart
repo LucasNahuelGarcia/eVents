@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,20 +7,6 @@ import './eventos.dart' as eventosData;
 
 const String _usuariosRef = "usuarios";
 const String _eventosRef = "eventos";
-
-///A partir de una referencia de documento de firebase, devuelve una url para descargar
-///dicho documento
-Future<String> imagePath(String path) async {
-  String pathFormateada = '/' + path.split('/')[1];
-  print("formateando imgurl");
-  pathFormateada = await FirebaseStorage.instance
-      .ref()
-      .child(pathFormateada)
-      .getDownloadURL();
-  print("conseguimos la path formateada");
-
-  return pathFormateada;
-}
 
 ///Chequea la existencia del usuario en la base de datos
 Future<bool> checkUserExists() async {
@@ -37,69 +21,92 @@ Future<bool> checkUserExists() async {
   return exists;
 }
 
-///Actualiza la lista local de eventos con los 20 mas ceranos de
-///la DB.
-///
-///Realiza esto reemplazando la lista original con una nueva, disparando el
-///ValueNotifier de la misma
+///Actualiza la lista local de eventos
 Future updateEventos() async {
-  DataSnapshot snapshot =
-      await FirebaseDatabase.instance.reference().child("eventos").once();
-  Map<dynamic, dynamic> data = snapshot.value;
-  List<Evento> _eventosAux = List<Evento>();
+  Map data = await getEventosFromFirebase();
+  List<Evento> _eventos = List<Evento>();
+  for (int i = 0; i < data.entries.length; i++)
+    _eventos.add(await parseEvento(data.entries.elementAt(i)));
 
-  for (int i = 0; i < data.entries.length; i++) {
-    MapEntry<dynamic, dynamic> value = data.entries.elementAt(i);
-    print("--------------evento----------------");
+  eventosData.Eventos.replace(_eventos);
+  print("eventos en lista: ${_eventos.length}");
+  print("eventos en lista: ${eventosData.Eventos.length}");
+}
 
-    //Nombre Creador
-    String idCreador = value.value['creador'] ?? "";
-    if (idCreador == userData.userRef.uid || idCreador == "") continue;
+Future<Evento> parseEvento(MapEntry element) async {
+  print("--------------evento-------------------------------");
+  print("   Creador: ");
+  String nombreCreador =
+      await getNombreCreadorFromUID(element.value['creador']);
+  print("            $nombreCreador");
+
+  print("    Referencia imagen:");
+  String refIMG = element.value['refIMG'] ?? "";
+  if (refIMG != "" && refIMG != null)
+    refIMG = await findFirebaseStorageDownloadReference(refIMG);
+  print("                       $refIMG");
+
+  print("    Descripcion:");
+  String descripcion = element.value['descripcion'] ?? "";
+  print("                  $descripcion");
+
+  print("    nombre:");
+  String nombre = element.value['nombre'] ?? "";
+  print("             $nombre");
+
+  print("    ID:");
+  String id = element.key ?? "";
+  print("            $id");
+
+  Evento evento = Evento(
+    nombre: nombre,
+    descripcion: descripcion,
+    id: id,
+    creador: nombreCreador,
+    referenciaImagen: refIMG,
+  );
+
+  return evento;
+}
+
+Future<String> getNombreCreadorFromUID(String idCreador) async {
+  String nombre = "<Nombre del Usuario>";
+  try {
     DataSnapshot _snapCreador = await FirebaseDatabase.instance
         .reference()
         .child("usuarios")
         .child(idCreador)
         .child("nombre")
         .once();
-    String nombreCreador = _snapCreador.value ?? "<Nombre del creador>";
-    print("    Creador: $nombreCreador");
-
-    //Imagen del evento
-    String refIMG = value.value['refIMG'] ?? "";
-    if (refIMG != "") refIMG = await imagePath(refIMG);
-    print("    IMGref: $refIMG");
-
-    //Descripcion del evento
-    String descripcion = value.value['descripcion'] ?? "";
-    print("    Descripcion: $descripcion");
-
-    //Nombre del evento
-    String nombre = value.value['nombre'] ?? "";
-    print("    nombre: $nombre");
-
-    //ID del evento
-    String id = value.key ?? "";
-    print("    ID: $id");
-
-    Evento newEvent = Evento(
-      nombre,
-      descripcion,
-      id,
-      nombreCreador,
-      referenciaImagen: refIMG,
-    );
-
-    _eventosAux.add(newEvent);
-    print("--------------agregado----------------");
+    nombre = _snapCreador.value;
+  } catch (e) {
+    print(">>Error en la busqueda del usuario en firebase.");
   }
+  return nombre;
+}
 
-  eventosData.Eventos.replace(_eventosAux);
-  print("eventos en lista: ${eventosData.Eventos.length}");
+Future<Map> getEventosFromFirebase() async {
+  DataSnapshot snapshot =
+      await FirebaseDatabase.instance.reference().child("eventos").once();
+  Map<dynamic, dynamic> data = snapshot.value;
+  return data;
+}
+
+Future<String> findFirebaseStorageDownloadReference(String refIMG) async {
+  try {
+    refIMG =
+        await FirebaseStorage.instance.ref().child(refIMG).getDownloadURL();
+    print("    IMGref: $refIMG");
+  } catch (e) {
+    print("error encontrando la imagen del evento: $refIMG");
+    e.toString();
+    refIMG = "";
+  }
+  return refIMG;
 }
 
 Future<bool> crearEvento(String nombre, String descripcion) async {
   Map<String, dynamic> data = {
-    //esto es lo que se sube a firebase DB
     "nombre": nombre,
     "descripcion": descripcion,
   };

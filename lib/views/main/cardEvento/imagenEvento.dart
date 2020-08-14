@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ImagenEvento extends StatelessWidget {
   final String referenciaImagen;
@@ -8,6 +9,7 @@ class ImagenEvento extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 270,
+      color: Colors.black,
       child: referenciaImagen != null && referenciaImagen != ""
           ? CachedNetworkImage(
               imageUrl: referenciaImagen,
@@ -17,9 +19,9 @@ class ImagenEvento extends StatelessWidget {
               errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,
             )
-          : Image(
-              image: AssetImage("res/imageHolder.png"),
-              fit: BoxFit.fitHeight,
+          : SvgPicture.asset(
+              'res/imageHolder.svg',
+              fit: BoxFit.contain,
             ),
     );
   }

@@ -4,11 +4,16 @@ import '../../globalData/auth.dart' as authF;
 class LoginView extends StatelessWidget {
   void _logIn(int credencial, BuildContext context) async {
     print("intentando ingresar...");
-    if (await authF.signIn(authF.SignInMethod.google)) {
-      print("se ingreso correctamente");
-      Navigator.pushReplacementNamed(context, "/main");
-    } else {
-      print("no se pudo iniciar sesion");
+    try {
+      if (await authF.signIn(authF.SignInMethod.google)) {
+        print("se ingreso correctamente");
+        Navigator.pushReplacementNamed(context, "/main");
+      } else {
+        print("no se pudo iniciar sesion");
+      }
+    } catch (e) {
+      print("excepcion en login con google");
+      print(e.toString());
     }
   }
 

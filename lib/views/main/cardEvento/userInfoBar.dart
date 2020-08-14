@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class UserInfoBar extends StatelessWidget {
   final String nombreCreador;
@@ -11,12 +12,10 @@ class UserInfoBar extends StatelessWidget {
           elevation: 1,
           shape: CircleBorder(),
           clipBehavior: Clip.hardEdge,
-          color: Colors.transparent,
-          child: Ink.image(
-            image: AssetImage('res/imageHolder.png'),
+          child: SvgPicture.asset(
+            'res/userPicturePlaceHolder.svg',
             fit: BoxFit.cover,
-            width: 35.0,
-            height: 35.0,
+            height: 30,
           ),
         ),
         Padding(
