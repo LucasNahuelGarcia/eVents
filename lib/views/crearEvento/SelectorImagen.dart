@@ -4,8 +4,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class SelectorImagen extends StatefulWidget {
-  final SelectorImagenState _selectorImagenState = SelectorImagenState();
-  String submitImagen() => _selectorImagenState.submitImagen();
+  SelectorImagen(Key key) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return SelectorImagenState();
@@ -13,17 +12,19 @@ class SelectorImagen extends StatefulWidget {
 }
 
 class SelectorImagenState extends State<SelectorImagen> {
+  final _picker = ImagePicker();
   File _image;
-  final picker = ImagePicker();
+  String imagePath = "";
 
-  String submitImagen() {
-    String path = "";
-    if (_image != null) path = _image.path;
-    return path;
+  void save() {
+    if (_image != null)
+      imagePath = _image.path;
+    else
+      imagePath = "";
   }
 
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       _image = File(pickedFile.path);

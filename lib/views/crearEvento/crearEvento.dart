@@ -9,6 +9,8 @@ import 'SelectorUbicacion.dart';
 class CrearEventoView extends StatelessWidget {
   final GlobalKey<FormNombreYDescripcionState> nombreYdescripcionKey =
       GlobalKey<FormNombreYDescripcionState>();
+  final GlobalKey<SelectorImagenState> imagenKey =
+      GlobalKey<SelectorImagenState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class CrearEventoView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SelectorImagen(),
+            SelectorImagen(imagenKey),
             FormNombreYDescripcion(nombreYdescripcionKey),
             SelectorUbicacion(),
           ],
@@ -36,10 +38,12 @@ class CrearEventoView extends StatelessWidget {
     bool validado = nombreYdescripcionKey.currentState.validate();
     if (validado) {
       nombreYdescripcionKey.currentState.save();
+      imagenKey.currentState.save();
 
       Evento evento = Evento(
         nombre: nombreYdescripcionKey.currentState.nombre,
         descripcion: nombreYdescripcionKey.currentState.descripcion,
+        referenciaImagen: imagenKey.currentState.imagePath,
       );
 
       db.crearEvento(evento);
