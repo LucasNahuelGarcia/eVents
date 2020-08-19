@@ -7,11 +7,11 @@ import 'SelectorImagen.dart';
 import 'SelectorUbicacion.dart';
 
 class CrearEventoView extends StatelessWidget {
-  GlobalKey<FormNombreYDescripcionState> nombreYdescripcionKey;
+  final GlobalKey<FormNombreYDescripcionState> nombreYdescripcionKey =
+      GlobalKey<FormNombreYDescripcionState>();
 
   @override
   Widget build(BuildContext context) {
-    nombreYdescripcionKey = GlobalKey<FormNombreYDescripcionState>();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => _crearEvento(context),
