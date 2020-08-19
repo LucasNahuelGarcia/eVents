@@ -1,3 +1,4 @@
+import 'package:events/views/crearEvento/SelectorUbicacion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:events/globalData/evento.dart';
@@ -94,36 +95,7 @@ class FormEventoState extends State<FormEvento> {
             ),
           ),
         ),
-        Container(
-          height: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: Card(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: SvgPicture.asset(
-                    'res/mapaUbicacion.svg',
-                    fit: BoxFit.cover,
-                    allowDrawingOutsideViewBox: false,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Avellaneda al 500, Madagascar."),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        SelectorUbicacion(),
       ],
     );
   }
