@@ -6,13 +6,13 @@ class Evento {
   final String descripcion;
   final String id;
   final String creador;
-  final String referenciaImagen;
+  String referenciaImagen;
 
   Evento(
-      {@required this.id,
-      @required this.creador,
+      {this.id,
+      this.creador,
       @required this.nombre,
-      this.descripcion,
+      @required this.descripcion,
       this.referenciaImagen});
 
   bool operator ==(o) => o is Evento && o.id == id;

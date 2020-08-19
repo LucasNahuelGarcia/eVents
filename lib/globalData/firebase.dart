@@ -105,12 +105,13 @@ Future<String> findFirebaseStorageDownloadReference(String refIMG) async {
   return refIMG;
 }
 
-Future<bool> crearEvento(String nombre, String descripcion) async {
+Future<bool> crearEvento(Evento evento) async {
+  print("Creando evento en firebase...");
   Map<String, dynamic> data = {
-    "nombre": nombre,
-    "descripcion": descripcion,
+    "nombre": evento.nombre,
+    "descripcion": evento.descripcion,
   };
-
+  print("nombre: ${evento.nombre}\ndescripcion: ${evento.descripcion}");
   await FirebaseDatabase.instance
       .reference()
       .child(_eventosRef)

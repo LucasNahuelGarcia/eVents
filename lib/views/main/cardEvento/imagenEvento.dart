@@ -10,6 +10,7 @@ class ImagenEvento extends StatelessWidget {
     return Container(
       height: 270,
       color: Colors.black,
+      padding: EdgeInsets.zero,
       child: referenciaImagen != null && referenciaImagen != ""
           ? CachedNetworkImage(
               imageUrl: referenciaImagen,
@@ -21,7 +22,7 @@ class ImagenEvento extends StatelessWidget {
             )
           : SvgPicture.asset(
               'res/imageHolder.svg',
-              fit: BoxFit.contain,
+              fit: BoxFit.fitWidth,
             ),
     );
   }

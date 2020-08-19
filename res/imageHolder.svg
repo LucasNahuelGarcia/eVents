@@ -1,19 +1,130 @@
-<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
-  <g id="color">
-    <rect x="6" y="41" width="60" height="13" fill="#B1CC33" stroke="none"/>
-    <polygon fill="#5C9E31" stroke="none" points="42,41 66,41 66,54 31,54"/>
-    <rect x="6" y="18" width="60" height="23" fill="#92D3F5" stroke="none"/>
-    <polygon fill="#61B2E4" stroke="none" points="61,18 66,18 66,41 42,41"/>
-    <polygon fill="#D0CFCE" stroke="none" points="22,43 33,32 44,43"/>
-    <polygon fill="#D0CFCE" stroke="none" points="28.5464,43.0464 45.0464,26.5464 60.75,42.25"/>
-    <path fill="#9b9b9a" stroke="#9b9b9a" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M40.3077,43"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="emoji"
+   viewBox="0 0 72 45"
+   version="1.1"
+   sodipodi:docname="imageHolder.svg"
+   width="72"
+   height="45"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata32">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs30" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="709"
+     id="namedview28"
+     showgrid="false"
+     units="mm"
+     inkscape:zoom="14.805519"
+     inkscape:cx="49.480521"
+     inkscape:cy="12.439809"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="emoji" />
+  <g
+     id="color"
+     transform="matrix(1.2160112,0,0,1.2600332,-7.5163451,-22.794536)">
+    <rect
+       x="6"
+       y="41"
+       width="60"
+       height="13"
+       fill="#b1cc33"
+       stroke="none"
+       id="rect2" />
+    <polygon
+       fill="#5c9e31"
+       stroke="none"
+       points="42,41 66,41 66,54 31,54 "
+       id="polygon4" />
+    <rect
+       x="6"
+       y="18"
+       width="60"
+       height="23"
+       fill="#92d3f5"
+       stroke="none"
+       id="rect6" />
+    <polygon
+       fill="#61b2e4"
+       stroke="none"
+       points="61,18 66,18 66,41 42,41 "
+       id="polygon8" />
+    <polygon
+       fill="#d0cfce"
+       stroke="none"
+       points="44,43 22,43 33,32 "
+       id="polygon10" />
+    <polygon
+       fill="#d0cfce"
+       stroke="none"
+       points="60.75,42.25 28.5464,43.0464 45.0464,26.5464 "
+       id="polygon12" />
+    <path
+       fill="#9b9b9a"
+       stroke="#9b9b9a"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       stroke-miterlimit="10"
+       stroke-width="2"
+       d="M 40.3077,43"
+       id="path14" />
   </g>
-  <g id="hair"/>
-  <g id="skin"/>
-  <g id="skin-shadow"/>
-  <g id="line">
-    <rect x="6" y="18" width="60" height="36" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
-    <polyline fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" points="44,43 22,43 33,32 39.9976,38.9976"/>
-    <polyline fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" points="39.7969,33.2031 45,28 60,43 43.9995,43"/>
+  <g
+     id="hair" />
+  <g
+     id="skin" />
+  <g
+     id="skin-shadow" />
+  <g
+     id="line"
+     transform="matrix(1.2621454,0,0,1.2304471,-9.3940913,-22.488267)">
+    <polyline
+       fill="none"
+       stroke="#000000"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       stroke-miterlimit="10"
+       stroke-width="2"
+       points="44,43 22,43 33,32 39.9976,38.9976"
+       id="polyline22" />
+    <polyline
+       fill="none"
+       stroke="#000000"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       stroke-miterlimit="10"
+       stroke-width="2"
+       points="39.7969,33.2031 45,28 60,43 43.9995,43"
+       id="polyline24" />
   </g>
 </svg>

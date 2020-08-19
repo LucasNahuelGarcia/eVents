@@ -16,7 +16,7 @@ class CardEvento extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       semanticContainer: false,
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      elevation: 5,
+      elevation: 1,
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(

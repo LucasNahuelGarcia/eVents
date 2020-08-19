@@ -9,9 +9,9 @@ class UserInfoBar extends StatelessWidget {
     return Row(
       children: <Widget>[
         Material(
-          elevation: 1,
+          elevation: 0,
           shape: CircleBorder(),
-          clipBehavior: Clip.hardEdge,
+          clipBehavior: Clip.antiAlias,
           child: SvgPicture.asset(
             'res/userPicturePlaceHolder.svg',
             fit: BoxFit.cover,
