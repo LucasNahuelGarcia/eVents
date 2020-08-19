@@ -1,15 +1,17 @@
 import 'package:events/globalData/evento.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'FormEvento.dart';
 import '../../globalData/firebase.dart' as db;
+import 'NombreYDescripcion.dart';
+import 'SelectorImagen.dart';
+import 'SelectorUbicacion.dart';
 
 class CrearEventoView extends StatelessWidget {
-  GlobalKey<FormEventoState> formKey;
+  GlobalKey<FormNombreYDescripcionState> nombreYdescripcionKey;
 
   @override
   Widget build(BuildContext context) {
-    formKey = GlobalKey<FormEventoState>();
+    nombreYdescripcionKey = GlobalKey<FormNombreYDescripcionState>();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => _crearEvento(context),
@@ -18,15 +20,28 @@ class CrearEventoView extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 300),
         scrollDirection: Axis.vertical,
-        child: FormEvento(formKey),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            SelectorImagen(),
+            FormNombreYDescripcion(nombreYdescripcionKey),
+            SelectorUbicacion(),
+          ],
+        ),
       ),
     );
   }
 
   void _crearEvento(BuildContext context) {
-    if (formKey.currentState.checkForm()) {
-      print("Creando nuevo evento ------------------------");
-      Evento evento = formKey.currentState.submit();
+    bool validado = nombreYdescripcionKey.currentState.validate();
+    if (validado) {
+      nombreYdescripcionKey.currentState.save();
+
+      Evento evento = Evento(
+        nombre: nombreYdescripcionKey.currentState.nombre,
+        descripcion: nombreYdescripcionKey.currentState.descripcion,
+      );
+
       db.crearEvento(evento);
       Navigator.of(context).pop();
     }
