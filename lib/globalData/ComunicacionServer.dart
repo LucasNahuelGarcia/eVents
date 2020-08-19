@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'evento.dart';
 import 'auth.dart' as userData;
 import 'eventos.dart' as eventosData;
@@ -106,10 +110,13 @@ Future<String> findFirebaseStorageDownloadReference(String refIMG) async {
 }
 
 Future<bool> crearEvento(Evento evento) async {
+  if (evento.referenciaImagen != null && evento.referenciaImagen != "")
+    subirImagenEvento(evento.referenciaImagen);
   print("Creando evento en firebase...");
   Map<String, dynamic> data = {
     "nombre": evento.nombre,
     "descripcion": evento.descripcion,
+    "refIMG": evento.referenciaImagen,
   };
   print("nombre: ${evento.nombre}\ndescripcion: ${evento.descripcion}");
   await FirebaseDatabase.instance
@@ -119,4 +126,22 @@ Future<bool> crearEvento(Evento evento) async {
       .set(data);
 
   return true;
+}
+
+Future<String> subirImagenEvento(String pathImagen) async {
+  String pathDeImagen = "";
+  File imagen = File(pathImagen);
+
+  if (await imagen.exists()) {
+    StorageReference storageReference =
+        FirebaseStorage().ref().child("/imagenesEvento/");
+    StorageUploadTask uploadTask = storageReference.putFile(imagen);
+
+    await uploadTask.onComplete;
+    if (uploadTask.isSuccessful)
+      pathDeImagen = await uploadTask.lastSnapshot.ref.getPath();
+    print(pathDeImagen);
+  } else
+    print("El archivo no existe.");
+  return pathDeImagen;
 }
