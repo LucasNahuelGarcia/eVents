@@ -110,8 +110,6 @@ Future<String> findFirebaseStorageDownloadReference(String refIMG) async {
 }
 
 Future<bool> crearEvento(Evento evento) async {
-  if (evento.referenciaImagen != null && evento.referenciaImagen != "")
-    subirImagenEvento(evento.referenciaImagen);
   print("Creando evento en firebase...");
   Map<String, dynamic> data = {
     "nombre": evento.nombre,
@@ -125,6 +123,10 @@ Future<bool> crearEvento(Evento evento) async {
       .push()
       .set(data);
 
+  print("subiendo la imagen del evento...");
+  if (evento.referenciaImagen != null && evento.referenciaImagen != "")
+    subirImagenEvento(evento.referenciaImagen);
+
   return true;
 }
 
@@ -134,7 +136,7 @@ Future<String> subirImagenEvento(String pathImagen) async {
 
   if (await imagen.exists()) {
     StorageReference storageReference =
-        FirebaseStorage().ref().child("/imagenesEvento/");
+        FirebaseStorage().ref().child("/imagenesEventos/");
     StorageUploadTask uploadTask = storageReference.putFile(imagen);
 
     await uploadTask.onComplete;
