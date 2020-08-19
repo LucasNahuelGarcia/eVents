@@ -1,7 +1,7 @@
 import 'package:events/globalData/evento.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../globalData/firebase.dart' as db;
+import '../../globalData/ComunicacionServer.dart' as db;
 import 'NombreYDescripcion.dart';
 import 'SelectorImagen.dart';
 import 'SelectorUbicacion.dart';

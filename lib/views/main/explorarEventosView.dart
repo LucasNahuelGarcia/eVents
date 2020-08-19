@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../globalData/evento.dart';
 import './cardEvento/cardEvento.dart';
-import '../../globalData/firebase.dart' as db;
+import '../../globalData/ComunicacionServer.dart' as db;
 
 class ExplorarEventosView extends StatelessWidget {
   final List<Evento> _eventos;

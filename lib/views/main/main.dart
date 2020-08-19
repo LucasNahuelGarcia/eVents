@@ -7,7 +7,7 @@ import 'eventosGuardadosView.dart';
 import 'suscripcionesView.dart';
 import 'navBar.dart';
 import 'explorarEventosView.dart';
-import '../../globalData/firebase.dart' as db;
+import '../../globalData/ComunicacionServer.dart' as db;
 import '../../globalData/eventos.dart' as eventosData;
 
 class MainView extends StatelessWidget {

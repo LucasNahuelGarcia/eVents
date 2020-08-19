@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'evento.dart';
-import './auth.dart' as userData;
-import './eventos.dart' as eventosData;
+import 'auth.dart' as userData;
+import 'eventos.dart' as eventosData;
 
 const String _usuariosRef = "usuarios";
 const String _eventosRef = "eventos";
